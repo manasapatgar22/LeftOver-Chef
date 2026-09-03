@@ -1,0 +1,113 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Stores user culinary preferences, allergies, and cooking goals",
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "cuisinePreferences": { "type": "array", "items": { "type": "string" } },
+        "dietaryPreference": { "type": "string" },
+        "foodAllergies": { "type": "array", "items": { "type": "string" } },
+        "cookingSkill": { "type": "string" },
+        "typicalCookingTime": { "type": "string" },
+        "healthGoals": { "type": "array", "items": { "type": "string" } },
+        "updatedAt": { "type": "string" }
+      }
+    },
+    "Leftover": {
+      "title": "Leftover Ingredient",
+      "description": "An ingredient currently stored in the user's kitchen",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "quantity": { "type": "string" },
+        "unit": { "type": "string" },
+        "priority": { "type": "string", "enum": ["use_first", "soon", "normal"] },
+        "expiryDate": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "used"] },
+        "category": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["name", "quantity", "priority", "status"]
+    },
+    "SavedRecipe": {
+      "title": "Saved Recipe",
+      "description": "A recipe saved by the user from AI suggestions",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "cuisine": { "type": "string" },
+        "difficulty": { "type": "string" },
+        "prepTime": { "type": "string" },
+        "cookTime": { "type": "string" },
+        "servings": { "type": "number" },
+        "leftoverIngredientsUsed": { "type": "array", "items": { "type": "string" } },
+        "additionalIngredients": { "type": "array", "items": { "type": "string" } },
+        "instructions": { "type": "array", "items": { "type": "string" } },
+        "calories": { "type": "number" },
+        "protein": { "type": "string" },
+        "carbohydrates": { "type": "string" },
+        "fat": { "type": "string" },
+        "fiber": { "type": "string" },
+        "allergyWarnings": { "type": "array", "items": { "type": "string" } },
+        "dietaryCompatibility": { "type": "array", "items": { "type": "string" } },
+        "leftoverUtilizationScore": { "type": "number" },
+        "wasteReductionExplanation": { "type": "string" },
+        "savedAt": { "type": "string" }
+      },
+      "required": ["title", "instructions", "leftoverIngredientsUsed"]
+    },
+    "RecipeHistory": {
+      "title": "Recipe History",
+      "description": "Historical record of generated recipes and food waste reduced",
+      "type": "object",
+      "properties": {
+        "recipeTitle": { "type": "string" },
+        "date": { "type": "string" },
+        "ingredientsUsed": { "type": "array", "items": { "type": "string" } },
+        "recipe": { "type": "object" },
+        "leftoverUtilizationScore": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["recipeTitle", "date", "leftoverUtilizationScore"]
+    },
+    "Stats": {
+      "title": "Food Waste Reduction Stats",
+      "description": "Aggregated user metrics for food waste reduction",
+      "type": "object",
+      "properties": {
+        "leftoversAdded": { "type": "number" },
+        "recipesGenerated": { "type": "number" },
+        "ingredientsSaved": { "type": "number" },
+        "wasteReductionScore": { "type": "number" },
+        "updatedAt": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile document"
+    },
+    "/users/{userId}/leftovers/{leftoverId}": {
+      "schema": "Leftover",
+      "description": "User's leftover ingredients"
+    },
+    "/users/{userId}/savedRecipes/{recipeId}": {
+      "schema": "SavedRecipe",
+      "description": "User's bookmarked recipes"
+    },
+    "/users/{userId}/recipeHistory/{historyId}": {
+      "schema": "RecipeHistory",
+      "description": "Historical recipes generated"
+    },
+    "/users/{userId}/stats/summary": {
+      "schema": "Stats",
+      "description": "Summary stats on food waste reduction"
+    }
+  }
+}

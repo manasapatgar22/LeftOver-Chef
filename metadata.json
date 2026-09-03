@@ -1,0 +1,6 @@
+{
+  "name": "Leftover Chef",
+  "description": "AI Smart Recipe Generator for Food Waste Reduction",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
